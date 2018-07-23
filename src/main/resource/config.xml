@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<configs>
+	<config>
+		<name>test1</name>
+		<port>9933</port>
+		<poolSize>60</poolSize>
+		<clazz>test.ServerTransferImpShortConnectionExample</clazz>
+	</config>
+</configs>
