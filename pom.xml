@@ -1,16 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.imwot.socket</groupId>
-  <artifactId>imwot-socket</artifactId>
-  <packaging>jar</packaging>
-  <version>2.0</version>
-  <name>imwot-socket</name>
-  <url>https://github.com/zhjh99/imwot-socket.git</url>
-  <description>imwot-socket</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.imwot.socket</groupId>
+	<artifactId>imwot-socket</artifactId>
+	<packaging>jar</packaging>
+	<version>2.0</version>
+	<name>imwot-socket</name>
+	<url>https://github.com/zhjh99/imwot-socket.git</url>
+	<description>imwot-socket</description>
 
-  
-  	<licenses>
+
+	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
@@ -29,9 +30,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/zhjh99/imwot-middleware-socket.git</connection>
-		<developerConnection>scm:git:https://github.com/zhjh99/imwot-middleware-socket.git</developerConnection>
-		<url>https://github.com/zhjh99/imwot-middleware-socket</url>
+		<connection>scm:git:https://github.com/zhjh99/imwot-socket.git</connection>
+		<developerConnection>scm:git:https://github.com/zhjh99/imwot-socket.git</developerConnection>
+		<url>https://github.com/zhjh99/imwot-socket</url>
 		<tag>v${project.version}</tag>
 	</scm>
 
@@ -47,7 +48,7 @@
 		</repository>
 	</distributionManagement>
 
-  
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -81,7 +82,7 @@
 			<version>3.7</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<testResources>
 			<testResource>
