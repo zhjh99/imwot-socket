@@ -25,17 +25,13 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.imwot.socket;
 
 /**
  * 〈一句话功能简述〉
  *
  * @author jinhong zhou
  */
-public class AbstractLog {
-
-	protected Logger log = LoggerFactory.getLogger(this.getClass());
+public interface IProcess {
+	public void transfer() throws Exception;
 }

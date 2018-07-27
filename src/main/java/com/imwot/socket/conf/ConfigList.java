@@ -25,50 +25,34 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket.conf;
 
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
+import java.util.List;
 
 /**
- * 〈一句话功能简述〉
+ * 传输服务器配置文件list
  *
  * @author jinhong zhou
  */
-public class AbstractProcess extends AbstractSocket implements IProcess {
-	private ICallBack callBack;
+public class ConfigList {
 
-	public AbstractProcess(ICallBack callBack) {
-		this.callBack = callBack;
-	}
+	/**
+	 * 多个传输服务器配置表
+	 */
+	private List<Config> list;
 
-	@Override
-	public void transfer() throws Exception {
-	}
-
-	public void call(SocketChannel socketChannel, Selector writeSelector, Selector readSelector) throws Exception {
-		this.socketChannel = socketChannel;
-		this.writeSelector = writeSelector;
-		this.readSelector = readSelector;
-		try {
-			transfer();
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-			close();
-		}
+	/**
+	 * @return the list
+	 */
+	public List<Config> getList() {
+		return list;
 	}
 
 	/**
-	 * 此方法覆盖父类的方法
-	 * 
-	 * @see com.quekua.iTransfer.socket.AbstractSocket#close()
+	 * @param list
+	 *            the list to set
 	 */
-	@Override
-	public boolean close() {
-		this.socketChannel = null;
-		this.writeSelector = null;
-		this.readSelector = null;
-		return callBack.close();
+	public void setList(List<Config> list) {
+		this.list = list;
 	}
-
 }

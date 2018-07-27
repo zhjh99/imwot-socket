@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket.utils;
+package com.imwot.socket.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,8 +33,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import com.imwot.middleware.socket.data.HeadTransferData;
-import com.imwot.middleware.socket.data.TransferData;
+import com.imwot.Charset;
+import com.imwot.socket.data.HeadTransferData;
+import com.imwot.socket.data.TransferData;
 
 /**
  * 数据处理工具类
@@ -102,7 +103,7 @@ public class DataUtils {
 			dataLength = DataUtils.getLittleEndianInt(lengthByte);
 
 			byte[] commandByte = ByteConvert.cut(receiveData, 9, commandLength);
-			command = commandByte.length == 0 ? "" : new String(commandByte, "UTF-8");
+			command = commandByte.length == 0 ? "" : new String(commandByte, Charset.UTF8);
 
 			dataByte = ByteConvert.cut(receiveData, 9 + commandLength, dataLength);
 

@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -42,7 +42,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.imwot.middleware.socket.conf.Config;
+import com.imwot.socket.conf.Config;
 
 /**
  * 〈一句话功能简述〉

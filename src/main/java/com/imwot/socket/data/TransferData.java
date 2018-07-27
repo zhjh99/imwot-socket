@@ -25,17 +25,19 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket.data;
+package com.imwot.socket.data;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
-import com.imwot.middleware.socket.utils.ByteConvert;
-import com.imwot.middleware.socket.utils.DataUtils;
+import com.imwot.Charset;
+import com.imwot.socket.utils.ByteConvert;
+import com.imwot.socket.utils.DataUtils;
 
 /**
  * 传输数据封装,包括接收、发送数据
  *
- * @author    jinhong zhou
+ * @author jinhong zhou
  */
 public class TransferData implements Serializable {
 
@@ -69,6 +71,22 @@ public class TransferData implements Serializable {
 	 */
 	private byte[] data;
 
+	public TransferData() {
+
+	}
+
+	public TransferData(int type, String command, byte[] data) {
+		this.setType(type);
+		this.setCommand(command);
+		this.setData(data);
+	}
+
+	public TransferData(int type, String command) {
+		this.setType(type);
+		this.setCommand(command);
+		this.setData(null);
+	}
+
 	/**
 	 * @return the dataLength
 	 */
@@ -88,12 +106,16 @@ public class TransferData implements Serializable {
 	 * 
 	 * @throws Exception
 	 */
-	public void setCommand(String command) throws Exception {
+	public void setCommand(String command) {
 		this.command = command;
 		if (command == null) {
 			this.commandLength = 0;
 		} else {
-			this.commandLength = command.getBytes("UTF-8").length;
+			try {
+				this.commandLength = command.getBytes(Charset.UTF8).length;
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -137,7 +159,8 @@ public class TransferData implements Serializable {
 	 * 把TransferData转成byte[]
 	 * 
 	 * @return
-	 * @throws Exception byte[]
+	 * @throws Exception
+	 *             byte[]
 	 * @exception/throws
 	 */
 	public byte[] toByte() throws Exception {
@@ -146,7 +169,7 @@ public class TransferData implements Serializable {
 		byte[] dataByte = data;
 		byte[] commandByte = null;
 		if (command != null) {
-			commandByte = command.getBytes("UTF-8");
+			commandByte = command.getBytes(Charset.UTF8);
 		}
 
 		ByteConvert bc = new ByteConvert();

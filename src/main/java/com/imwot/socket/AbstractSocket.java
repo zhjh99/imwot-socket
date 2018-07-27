@@ -25,21 +25,22 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
-import com.imwot.middleware.socket.data.HeadTransferData;
-import com.imwot.middleware.socket.data.TransferData;
-import com.imwot.middleware.socket.utils.ByteConvert;
-import com.imwot.middleware.socket.utils.DataUtils;
-import com.imwot.middleware.socket.utils.ObjectUtils;
+import com.imwot.socket.data.HeadTransferData;
+import com.imwot.socket.data.TransferData;
+import com.imwot.socket.utils.ByteConvert;
+import com.imwot.socket.utils.DataUtils;
+import com.imwot.socket.utils.ObjectUtils;
 
 /**
  * socket抽象方法,会被服务器端和客户端同时继承
@@ -57,11 +58,6 @@ public abstract class AbstractSocket extends AbstractLog {
 	 * 默认数据大小
 	 */
 	protected final int DEFAULT_SIZE = 24455;
-
-	/**
-	 * 默认发送和接收字符集
-	 */
-	protected String DEFAULT_CHARSET = "UTF-8";
 
 	/**
 	 * 读取头部后面剩余数据缓冲用(在此创建,可以重复使用)

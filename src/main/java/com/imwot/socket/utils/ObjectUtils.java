@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket.utils;
+package com.imwot.socket.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,17 +37,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import com.imwot.Charset;
+
 /**
  * 〈一句话功能简述〉
  *
  * @author jinhong zhou
  */
 public class ObjectUtils {
-
-	/**
-	 * 默认编码
-	 */
-	private final static String DEFAULT_CHARSET = "UTF-8";
 
 	/**
 	 * 
@@ -126,7 +123,7 @@ public class ObjectUtils {
 	public static String toStringByGZIP(byte[] data) throws Exception {
 		String result = null;
 		byte[] bytes = toByteByZIP(data);
-		result = new String(bytes, DEFAULT_CHARSET);
+		result = new String(bytes, Charset.UTF8);
 		return result;
 	}
 }

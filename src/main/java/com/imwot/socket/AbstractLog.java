@@ -25,93 +25,17 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket.data;
+package com.imwot.socket;
 
-import com.imwot.middleware.socket.utils.ByteConvert;
-import com.imwot.middleware.socket.utils.DataUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * 传输数据(前面9个字节数据)
+ * 〈一句话功能简述〉
  *
- * @author    jinhong zhou
+ * @author jinhong zhou
  */
-public class HeadTransferData {
+public class AbstractLog {
 
-	/**
-	 * 类型
-	 */
-	private int type;
-
-	/**
-	 * 命令长度
-	 */
-	private int commandLength;
-
-	/**
-	 * 数据长度
-	 */
-	private int dataLength;
-
-	/**
-	 * @return 属性 type
-	 */
-	public int getType() {
-		return type;
-	}
-
-	/**
-	 * 设置属性 type 值
-	 */
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return 属性 commandLength
-	 */
-	public int getCommandLength() {
-		return commandLength;
-	}
-
-	/**
-	 * 设置属性 commandLength 值
-	 */
-	public void setCommandLength(int commandLength) {
-		this.commandLength = commandLength;
-	}
-
-	/**
-	 * @return 属性 dataLength
-	 */
-	public int getDataLength() {
-		return dataLength;
-	}
-
-	/**
-	 * 设置属性 dataLength 值
-	 */
-	public void setDataLength(int dataLength) {
-		this.dataLength = dataLength;
-	}
-
-	/**
-	 * 
-	 * 把头部信息转为二进制
-	 *
-	 * @return
-	 * @throws Exception 
-	 * byte[]
-	 * @exception/throws
-	 */
-	public byte[] toByte() throws Exception {
-		byte[] orderLengthByte = DataUtils.toLittleEndian(commandLength);
-		byte[] dataLengthByte = DataUtils.toLittleEndian(dataLength);
-
-		ByteConvert bc = new ByteConvert();
-		bc.append((byte) type);
-		bc.append(orderLengthByte);
-		bc.append(dataLengthByte);
-		return bc.toArray();
-	}
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 }
-

@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class SocketClient extends AbstractSocket {
 	/**
 	 * 此方法覆盖父类的方法
 	 * 
-	 * @see com.quekua.iTransfer.socket.AbstractSocket#close()
+	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#close()
 	 */
 	@Override
 	public boolean close() {
@@ -109,7 +109,7 @@ public class SocketClient extends AbstractSocket {
 	/**
 	 * 此方法覆盖父类的方法
 	 * 
-	 * @see com.quekua.iTransfer.socket.AbstractSocket#sendingProcess(java.nio.ByteBuffer)
+	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#sendingProcess(java.nio.ByteBuffer)
 	 */
 	protected long sendingProcess(ByteBuffer data) throws Exception {
 		int sendTotal = 0;

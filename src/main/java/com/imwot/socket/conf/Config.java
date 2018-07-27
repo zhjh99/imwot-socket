@@ -25,13 +25,91 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket.conf;
 
 /**
- * 〈一句话功能简述〉
+ * 传输服务端配置文件
  *
- * @author jinhong zhou
+ * @author    jinhong zhou
  */
-public interface IProcess {
-	public void transfer() throws Exception;
+public class Config {
+
+	/**
+	 * 监听服务器名称
+	 */
+	private String name;
+
+	/**
+	 * 监听端口
+	 */
+	private int port;
+
+	/**
+	 * 处理线程数
+	 */
+	private int poolSize;
+
+	/**
+	 * 处理类
+	 */
+	private String clazz;
+
+	/**
+	 * @return 属性 name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 设置属性 name 值
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the port
+	 */
+	public int getPort() {
+		return port;
+	}
+
+	/**
+	 * @param port
+	 *            the port to set
+	 */
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	/**
+	 * @return the clazz
+	 */
+	public String getClazz() {
+		return clazz;
+	}
+
+	/**
+	 * @param clazz
+	 *            the clazz to set
+	 */
+	public void setClazz(String clazz) {
+		this.clazz = clazz;
+	}
+
+	/**
+	 * @return the poolSize
+	 */
+	public int getPoolSize() {
+		return poolSize;
+	}
+
+	/**
+	 * @param poolSize
+	 *            the poolSize to set
+	 */
+	public void setPoolSize(int poolSize) {
+		this.poolSize = poolSize;
+	}
 }

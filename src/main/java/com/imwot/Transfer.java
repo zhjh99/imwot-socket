@@ -25,18 +25,18 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware;
+package com.imwot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.imwot.middleware.socket.AbstractLog;
-import com.imwot.middleware.socket.SocketServer;
-import com.imwot.middleware.socket.conf.Config;
-import com.imwot.middleware.socket.conf.ConfigList;
-import com.imwot.middleware.socket.conf.XmlConfiguration;
+import com.imwot.socket.AbstractLog;
+import com.imwot.socket.SocketServer;
+import com.imwot.socket.conf.Config;
+import com.imwot.socket.conf.ConfigList;
+import com.imwot.socket.conf.XmlConfiguration;
 
 /**
  * 启动(n个)传输服务器

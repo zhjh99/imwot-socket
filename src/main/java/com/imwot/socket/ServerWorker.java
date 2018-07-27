@@ -25,7 +25,7 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket;
+package com.imwot.socket;
 
 import java.lang.reflect.Constructor;
 import java.nio.channels.SelectionKey;
@@ -33,14 +33,14 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.BlockingQueue;
 
-import com.imwot.middleware.socket.conf.Config;
+import com.imwot.socket.conf.Config;
 
 /**
  * 〈一句话功能简述〉
  *
- * @author    jinhong zhou
+ * @author jinhong zhou
  */
-public class ServerWorker extends AbstractLog implements Runnable{
+public class ServerWorker extends AbstractLog implements Runnable {
 
 	/**
 	 * 处理接口
@@ -95,13 +95,11 @@ public class ServerWorker extends AbstractLog implements Runnable{
 	@Override
 	public void run() {
 		try {
-			readSelector = Selector.open();
-			writeSelector = Selector.open();
 			while (true) {
-				process();
 				if (this.clientChannel == null || (this.clientChannel != null && this.clientChannel.socket().isClosed())) {
 					addNewSocketChannel();
 				}
+				process();
 			}
 		} catch (Exception e) {
 			log.warn(null, e);
@@ -118,17 +116,16 @@ public class ServerWorker extends AbstractLog implements Runnable{
 	 */
 	private void process() {
 		try {
-			if (readSelector.select(3000) != 0) {
-				try {
-					if ((readKey.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
-						transfer.call(this.clientChannel, writeSelector, readSelector);
-					}
-				} catch (Exception e) {
-					if (log.isDebugEnabled()) {
-						log.warn("IO异常或客户端断开连接");
-					}
-					closeSocket();
+			readSelector.select(3000);
+			try {
+				if ((readKey.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
+					transfer.call(this.clientChannel, writeSelector, readSelector);
 				}
+			} catch (Exception e) {
+				if (log.isDebugEnabled()) {
+					log.warn("IO异常或客户端断开连接");
+				}
+				closeSocket();
 			}
 		} catch (Exception e) {
 			log.warn(null, e);
@@ -158,15 +155,12 @@ public class ServerWorker extends AbstractLog implements Runnable{
 					log.warn(null, e);
 				}
 
+				readSelector = Selector.open();
+				writeSelector = Selector.open();
+
 				clientChannel.configureBlocking(false);
 				readKey = clientChannel.register(readSelector, SelectionKey.OP_READ);
 
-				if (writeSelector == null) {
-					writeSelector = Selector.open();
-				}
-				writeKey = clientChannel.register(writeSelector, SelectionKey.OP_WRITE);
-				readSelector.wakeup();
-				writeSelector.wakeup();
 			}
 		} catch (Exception e) {
 			log.warn(null, e);

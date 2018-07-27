@@ -25,34 +25,93 @@
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.imwot.middleware.socket.conf;
+package com.imwot.socket.data;
 
-import java.util.List;
+import com.imwot.socket.utils.ByteConvert;
+import com.imwot.socket.utils.DataUtils;
 
 /**
- * 传输服务器配置文件list
+ * 传输数据(前面9个字节数据)
  *
- * @author jinhong zhou
+ * @author    jinhong zhou
  */
-public class ConfigList {
+public class HeadTransferData {
 
 	/**
-	 * 多个传输服务器配置表
+	 * 类型
 	 */
-	private List<Config> list;
+	private int type;
 
 	/**
-	 * @return the list
+	 * 命令长度
 	 */
-	public List<Config> getList() {
-		return list;
+	private int commandLength;
+
+	/**
+	 * 数据长度
+	 */
+	private int dataLength;
+
+	/**
+	 * @return 属性 type
+	 */
+	public int getType() {
+		return type;
 	}
 
 	/**
-	 * @param list
-	 *            the list to set
+	 * 设置属性 type 值
 	 */
-	public void setList(List<Config> list) {
-		this.list = list;
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return 属性 commandLength
+	 */
+	public int getCommandLength() {
+		return commandLength;
+	}
+
+	/**
+	 * 设置属性 commandLength 值
+	 */
+	public void setCommandLength(int commandLength) {
+		this.commandLength = commandLength;
+	}
+
+	/**
+	 * @return 属性 dataLength
+	 */
+	public int getDataLength() {
+		return dataLength;
+	}
+
+	/**
+	 * 设置属性 dataLength 值
+	 */
+	public void setDataLength(int dataLength) {
+		this.dataLength = dataLength;
+	}
+
+	/**
+	 * 
+	 * 把头部信息转为二进制
+	 *
+	 * @return
+	 * @throws Exception 
+	 * byte[]
+	 * @exception/throws
+	 */
+	public byte[] toByte() throws Exception {
+		byte[] orderLengthByte = DataUtils.toLittleEndian(commandLength);
+		byte[] dataLengthByte = DataUtils.toLittleEndian(dataLength);
+
+		ByteConvert bc = new ByteConvert();
+		bc.append((byte) type);
+		bc.append(orderLengthByte);
+		bc.append(dataLengthByte);
+		return bc.toArray();
 	}
 }
+
