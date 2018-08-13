@@ -89,9 +89,9 @@ public class SocketServer extends Thread {
 		this.config = config;
 		handlerList = new ArrayList<ServerWorker>();
 		socketChannelQueue = new LinkedBlockingQueue<SocketChannel>(config.getPoolSize() * 10);
+		
 		for (int i = 0; i < config.getPoolSize(); i++) {
 			ServerWorker worker = new ServerWorker(config, socketChannelQueue);
-
 			Thread thread = new Thread(worker);
 			thread.start();
 			handlerList.add(worker);

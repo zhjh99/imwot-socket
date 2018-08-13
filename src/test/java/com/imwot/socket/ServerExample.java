@@ -27,66 +27,45 @@
  */
 package com.imwot.socket;
 
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.imwot.socket.data.TransferData;
+import com.imwot.Transfer;
+import com.imwot.socket.conf.Config;
+import com.imwot.socket.conf.ConfigList;
 
 /**
  * 〈一句话功能简述〉
  *
  * @author jinhong zhou
  */
-public abstract class AbstractProcess extends AbstractSocket implements IProcess {
-	protected final static String success = "ok";
-	protected final static String error = "no";
-	private ICallBack callBack;
-
-	public AbstractProcess(ICallBack callBack) {
-		this.callBack = callBack;
-	}
-
-	@Override
-	public void transfer() throws Exception {
-		// 接收
-		TransferData receiveData = this.receive();
-		if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
-			this.close();
-			log.info("socket close");
-		} else {
-			TransferData backData = handle(receiveData);
-			if (null != backData) {
-				// 返回
-				this.send(backData);
-			}
-		}
-	}
-
-	protected abstract TransferData handle(TransferData receiveData) throws Exception;
-
-	public void call(SocketChannel socketChannel, Selector writeSelector, Selector readSelector) throws Exception {
-		this.socketChannel = socketChannel;
-		this.writeSelector = writeSelector;
-		this.readSelector = readSelector;
-		try {
-			transfer();
-		} catch (Exception e) {
-			log.warn(null,e);
-			close();
-		}
-	}
+public class ServerExample {
 
 	/**
-	 * 此方法覆盖父类的方法
-	 * 
-	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#close()
+	 * 〈一句话功能简述〉
+	 *
+	 * @param args
+	 *            void
+	 * @throws Exception
+	 * @exception/throws
 	 */
-	@Override
-	public boolean close() {
-		this.socketChannel = null;
-		this.writeSelector = null;
-		this.readSelector = null;
-		return callBack.close();
+
+	public static void main(String[] args) throws Exception {
+		ConfigList configList = new ConfigList();
+
+		List<Config> list = new ArrayList<Config>();
+		Config configServerConfig = new Config();
+		configServerConfig.setClazz("com.imwot.socket.ServerServiceImp");
+		configServerConfig.setName("service");
+		configServerConfig.setPoolSize(3);
+		configServerConfig.setPort(7777);
+		list.add(configServerConfig);
+
+		configList.setList(list);
+
+		Transfer transfer = new Transfer(configList);
+		transfer.startServer();
+
 	}
 
 }

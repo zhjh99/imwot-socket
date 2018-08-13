@@ -27,9 +27,6 @@
  */
 package com.imwot.socket;
 
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
-
 import com.imwot.socket.data.TransferData;
 
 /**
@@ -37,56 +34,21 @@ import com.imwot.socket.data.TransferData;
  *
  * @author jinhong zhou
  */
-public abstract class AbstractProcess extends AbstractSocket implements IProcess {
-	protected final static String success = "ok";
-	protected final static String error = "no";
-	private ICallBack callBack;
-
-	public AbstractProcess(ICallBack callBack) {
-		this.callBack = callBack;
+public class ServerServiceImp extends AbstractProcess {
+	public ServerServiceImp(ICallBack callBack) {
+		super(callBack);
 	}
 
 	@Override
-	public void transfer() throws Exception {
-		// 接收
-		TransferData receiveData = this.receive();
-		if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
-			this.close();
-			log.info("socket close");
-		} else {
-			TransferData backData = handle(receiveData);
-			if (null != backData) {
-				// 返回
-				this.send(backData);
-			}
-		}
-	}
+	protected TransferData handle(TransferData receiveData) throws Exception {
+		TransferData send = new TransferData();
 
-	protected abstract TransferData handle(TransferData receiveData) throws Exception;
+		byte[] data = receiveData.getData();
+		String receiveString = new String(data);
+		System.out.println(Thread.currentThread().getName()+"接受到数据:" + receiveString);
 
-	public void call(SocketChannel socketChannel, Selector writeSelector, Selector readSelector) throws Exception {
-		this.socketChannel = socketChannel;
-		this.writeSelector = writeSelector;
-		this.readSelector = readSelector;
-		try {
-			transfer();
-		} catch (Exception e) {
-			log.warn(null,e);
-			close();
-		}
-	}
-
-	/**
-	 * 此方法覆盖父类的方法
-	 * 
-	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#close()
-	 */
-	@Override
-	public boolean close() {
-		this.socketChannel = null;
-		this.writeSelector = null;
-		this.readSelector = null;
-		return callBack.close();
+		send.setData("success".getBytes());
+		return send;
 	}
 
 }

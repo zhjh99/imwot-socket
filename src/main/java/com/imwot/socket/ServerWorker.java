@@ -213,4 +213,11 @@ public class ServerWorker extends AbstractLog implements Runnable {
 			return closeSocket();
 		}
 	};
+
+	/**
+	 * @return 属性 callBack
+	 */
+	public ICallBack getCallBack() {
+		return callBack;
+	}
 }

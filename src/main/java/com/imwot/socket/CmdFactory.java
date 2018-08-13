@@ -27,66 +27,24 @@
  */
 package com.imwot.socket;
 
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
-
 import com.imwot.socket.data.TransferData;
 
 /**
- * 〈一句话功能简述〉
+ * CmdFactory
  *
  * @author jinhong zhou
  */
-public abstract class AbstractProcess extends AbstractSocket implements IProcess {
-	protected final static String success = "ok";
-	protected final static String error = "no";
-	private ICallBack callBack;
-
-	public AbstractProcess(ICallBack callBack) {
-		this.callBack = callBack;
-	}
-
-	@Override
-	public void transfer() throws Exception {
-		// 接收
-		TransferData receiveData = this.receive();
-		if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
-			this.close();
-			log.info("socket close");
-		} else {
-			TransferData backData = handle(receiveData);
-			if (null != backData) {
-				// 返回
-				this.send(backData);
-			}
-		}
-	}
-
-	protected abstract TransferData handle(TransferData receiveData) throws Exception;
-
-	public void call(SocketChannel socketChannel, Selector writeSelector, Selector readSelector) throws Exception {
-		this.socketChannel = socketChannel;
-		this.writeSelector = writeSelector;
-		this.readSelector = readSelector;
-		try {
-			transfer();
-		} catch (Exception e) {
-			log.warn(null,e);
-			close();
-		}
-	}
+public class CmdFactory {
 
 	/**
-	 * 此方法覆盖父类的方法
-	 * 
-	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#close()
+	 * 关闭cocket的type
 	 */
-	@Override
-	public boolean close() {
-		this.socketChannel = null;
-		this.writeSelector = null;
-		this.readSelector = null;
-		return callBack.close();
-	}
+	public final static int CLOSE_TYPE = 0;
 
+	/**
+	 * 关闭cocket的cmd
+	 */
+	public final static String CLOSE_CMD = "close";
+
+	public static TransferData closeCmd = new TransferData(0, CLOSE_CMD);
 }

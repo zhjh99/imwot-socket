@@ -27,9 +27,6 @@
  */
 package com.imwot.socket;
 
-import java.nio.channels.Selector;
-import java.nio.channels.SocketChannel;
-
 import com.imwot.socket.data.TransferData;
 
 /**
@@ -37,56 +34,26 @@ import com.imwot.socket.data.TransferData;
  *
  * @author jinhong zhou
  */
-public abstract class AbstractProcess extends AbstractSocket implements IProcess {
-	protected final static String success = "ok";
-	protected final static String error = "no";
-	private ICallBack callBack;
+public class ClientExample {
 
-	public AbstractProcess(ICallBack callBack) {
-		this.callBack = callBack;
-	}
+	public static void main(String[] args) throws Exception {
+		SocketClient client = new SocketClient("127.0.0.1", 7777);
 
-	@Override
-	public void transfer() throws Exception {
-		// 接收
-		TransferData receiveData = this.receive();
-		if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
-			this.close();
-			log.info("socket close");
-		} else {
-			TransferData backData = handle(receiveData);
-			if (null != backData) {
-				// 返回
-				this.send(backData);
+		for (int x = 0; x < 10000; x++) {
+			TransferData send = new TransferData();
+			send.setData((x+"你好，我是测试机").getBytes());
+
+			client.send(send);
+
+			TransferData receiveData = client.receive();
+			System.out.println("接收到服务端数据:" + new String(receiveData.getData()));
+			try {
+				Thread.sleep(2000);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
+			
 		}
+
 	}
-
-	protected abstract TransferData handle(TransferData receiveData) throws Exception;
-
-	public void call(SocketChannel socketChannel, Selector writeSelector, Selector readSelector) throws Exception {
-		this.socketChannel = socketChannel;
-		this.writeSelector = writeSelector;
-		this.readSelector = readSelector;
-		try {
-			transfer();
-		} catch (Exception e) {
-			log.warn(null,e);
-			close();
-		}
-	}
-
-	/**
-	 * 此方法覆盖父类的方法
-	 * 
-	 * @see com.imwot.socket.quekua.iTransfer.socket.AbstractSocket#close()
-	 */
-	@Override
-	public boolean close() {
-		this.socketChannel = null;
-		this.writeSelector = null;
-		this.readSelector = null;
-		return callBack.close();
-	}
-
 }

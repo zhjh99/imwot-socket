@@ -75,6 +75,11 @@ public class SocketClient extends AbstractSocket {
 	 */
 	@Override
 	public boolean close() {
+		try {
+			send(CmdFactory.closeCmd);
+		} catch (Exception e) {
+		}
+
 		boolean result = false;
 		try {
 			socketChannel.close();
