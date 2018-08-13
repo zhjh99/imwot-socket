@@ -82,14 +82,14 @@ public class ServerWorker extends AbstractLog implements Runnable {
 	 */
 	private BlockingQueue<SocketChannel> socketChannelQueue;
 
-	public ServerWorker(Config config, BlockingQueue<SocketChannel> socketChannelQueue) throws Exception {
+	public ServerWorker(Config config, BlockingQueue<SocketChannel> socketChannelQueue, Object o) throws Exception {
 		this.config = config;
 		this.socketChannelQueue = socketChannelQueue;
 
 		Class<?> clazz = Class.forName(this.config.getClazz());
-		Constructor<?> constructor = clazz.getConstructor(ICallBack.class);
+		Constructor<?> constructor = clazz.getConstructor(Object.class, ICallBack.class);
 		constructor.setAccessible(true);
-		transfer = (AbstractProcess) constructor.newInstance(callBack);
+		transfer = (AbstractProcess) constructor.newInstance(o, callBack);
 	}
 
 	@Override

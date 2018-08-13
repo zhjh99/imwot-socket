@@ -28,6 +28,7 @@
 package com.imwot.socket;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -39,6 +40,7 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,9 +91,17 @@ public class SocketServer extends Thread {
 		this.config = config;
 		handlerList = new ArrayList<ServerWorker>();
 		socketChannelQueue = new LinkedBlockingQueue<SocketChannel>(config.getPoolSize() * 10);
-		
+
+		Object parm = null;
+		if (StringUtils.isNotBlank(this.config.getParmClazz())) {
+			Class<?> clazz1 = Class.forName(this.config.getParmClazz());
+			Constructor<?> constructor1 = clazz1.getConstructor();
+			constructor1.setAccessible(true);
+			parm = (Object) constructor1.newInstance();
+		}
+
 		for (int i = 0; i < config.getPoolSize(); i++) {
-			ServerWorker worker = new ServerWorker(config, socketChannelQueue);
+			ServerWorker worker = new ServerWorker(config, socketChannelQueue, parm);
 			Thread thread = new Thread(worker);
 			thread.start();
 			handlerList.add(worker);

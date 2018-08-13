@@ -40,7 +40,11 @@ import com.imwot.socket.data.TransferData;
 public abstract class AbstractProcess extends AbstractSocket implements IProcess {
 	protected final static String success = "ok";
 	protected final static String error = "no";
-	private ICallBack callBack;
+	protected ICallBack callBack;
+
+	public AbstractProcess(Object o, ICallBack callBack) {
+		this.callBack = callBack;
+	}
 
 	public AbstractProcess(ICallBack callBack) {
 		this.callBack = callBack;
@@ -71,7 +75,7 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 		try {
 			transfer();
 		} catch (Exception e) {
-			log.warn(null,e);
+			log.warn(null, e);
 			close();
 		}
 	}

@@ -30,7 +30,7 @@ package com.imwot.socket.conf;
 /**
  * 传输服务端配置文件
  *
- * @author    jinhong zhou
+ * @author jinhong zhou
  */
 public class Config {
 
@@ -53,6 +53,11 @@ public class Config {
 	 * 处理类
 	 */
 	private String clazz;
+
+	/**
+	 * 处理类的参数类
+	 */
+	private String parmClazz;
 
 	/**
 	 * @return 属性 name
@@ -111,5 +116,19 @@ public class Config {
 	 */
 	public void setPoolSize(int poolSize) {
 		this.poolSize = poolSize;
+	}
+
+	/**
+	 * @return 属性 parmClazz
+	 */
+	public String getParmClazz() {
+		return parmClazz;
+	}
+
+	/**
+	 * 设置属性 parmClazz 值
+	 */
+	public void setParmClazz(String parmClazz) {
+		this.parmClazz = parmClazz;
 	}
 }
