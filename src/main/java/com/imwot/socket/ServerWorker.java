@@ -117,7 +117,7 @@ public class ServerWorker extends AbstractLog implements Runnable {
 	private void process() {
 		try {
 			long startTime = System.currentTimeMillis();
-			if (readSelector.select(3000) == 0) {
+			if (readSelector.select(10000) == 0) {
 				long endTime = System.currentTimeMillis();
 				long time = endTime - startTime;
 				if (time > 0) {
