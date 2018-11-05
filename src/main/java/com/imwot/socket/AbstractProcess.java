@@ -73,6 +73,7 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 			transfer();
 		} catch (IOException ioe) {
 			log.info("socket closed");
+			close();
 		} catch (Exception e) {
 			log.warn(null, e);
 			close();
