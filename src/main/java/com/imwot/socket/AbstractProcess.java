@@ -51,14 +51,16 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 	public void transfer() throws Exception {
 		// 接收
 		TransferData receiveData = this.receive();
-		if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
-			this.close();
-			log.info("socket close");
-		} else {
-			TransferData backData = handle(receiveData);
-			if (null != backData) {
-				// 返回
-				this.send(backData);
+		if (receiveData != null) {
+			if (receiveData.getType() == CmdFactory.closeCmd.getType() && receiveData.getCommand().equals(CmdFactory.closeCmd.getCommand())) {
+				this.close();
+				log.info("socket close");
+			} else {
+				TransferData backData = handle(receiveData);
+				if (null != backData) {
+					// 返回
+					this.send(backData);
+				}
 			}
 		}
 	}

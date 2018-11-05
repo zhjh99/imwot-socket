@@ -93,14 +93,18 @@ public abstract class AbstractSocket extends AbstractLog {
 	 * @exception/throws
 	 */
 	public TransferData receive() throws Exception {
-		TransferData data = new TransferData();
+		TransferData data = null;
 		ByteConvert bc = new ByteConvert();
 
 		HeadTransferData headTransferData = readHead(bc);
-		readRemainingData(headTransferData, bc);
+		if (headTransferData != null) {
+			data = new TransferData();
+			readRemainingData(headTransferData, bc);
 
-		data = DataUtils.toTransferData(bc.toArray());
-		bc = null;
+			data = DataUtils.toTransferData(bc.toArray());
+			bc = null;
+		}
+
 		return data;
 	}
 
@@ -119,8 +123,9 @@ public abstract class AbstractSocket extends AbstractLog {
 
 		int readLength = socketChannel.read(headData);
 
-		while (readLength == 0) {
-			readLength = socketChannel.read(headData);
+		if (readLength == 0) {
+			// 客户端无数据传输
+			return null;
 		}
 
 		if (readLength == -1) {
