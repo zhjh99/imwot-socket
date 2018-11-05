@@ -72,7 +72,7 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 		try {
 			transfer();
 		} catch (IOException ioe) {
-			log.info("远程主机关闭了一个现有的连接");
+			log.info("socket closed");
 		} catch (Exception e) {
 			log.warn(null, e);
 			close();
