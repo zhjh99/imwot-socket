@@ -116,7 +116,17 @@ public class ServerWorker extends AbstractLog implements Runnable {
 	 */
 	private void process() {
 		try {
-			readSelector.select(3000);
+			long startTime = System.currentTimeMillis();
+			if (readSelector.select(3000) == 0) {
+				long endTime = System.currentTimeMillis();
+				long time = endTime - startTime;
+				if (time > 0) {
+					return;
+				} else {
+					// log.info("有数据");
+				}
+			}
+
 			try {
 				if ((readKey.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
 					transfer.call(this.clientChannel, writeSelector, readSelector);
