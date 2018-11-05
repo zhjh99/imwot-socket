@@ -27,6 +27,7 @@
  */
 package com.imwot.socket;
 
+import java.io.IOException;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
@@ -43,10 +44,6 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 	protected ICallBack callBack;
 
 	public AbstractProcess(Object o, ICallBack callBack) {
-		this.callBack = callBack;
-	}
-
-	public AbstractProcess(ICallBack callBack) {
 		this.callBack = callBack;
 	}
 
@@ -74,6 +71,8 @@ public abstract class AbstractProcess extends AbstractSocket implements IProcess
 		this.readSelector = readSelector;
 		try {
 			transfer();
+		} catch (IOException ioe) {
+			log.info("远程主机关闭了一个现有的连接");
 		} catch (Exception e) {
 			log.warn(null, e);
 			close();

@@ -5,7 +5,7 @@
 	<groupId>com.imwot.socket</groupId>
 	<artifactId>imwot-socket</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0</version>
+	<version>4.0</version>
 	<name>imwot-socket</name>
 	<url>https://github.com/zhjh99/imwot-socket.git</url>
 	<description>imwot-socket</description>

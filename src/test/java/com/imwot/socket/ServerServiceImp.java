@@ -36,7 +36,7 @@ import com.imwot.socket.data.TransferData;
  */
 public class ServerServiceImp extends AbstractProcess {
 
-	private Gloable o;
+	protected Gloable o;
 
 	public ServerServiceImp(Object o, ICallBack callBack) {
 		super(o, callBack);
@@ -55,6 +55,14 @@ public class ServerServiceImp extends AbstractProcess {
 		// receiveString + ",Count:" + this.o.getCount());
 		System.out.println(Thread.currentThread().getName() + "接受到数据:" + receiveString);
 
+		try {
+			for (long x = 0; x < Long.MAX_VALUE; x++) {
+
+			}
+			System.out.println("计算完成");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		send.setData("success".getBytes());
 		return send;
 	}
